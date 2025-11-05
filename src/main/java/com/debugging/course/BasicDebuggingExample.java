@@ -54,8 +54,8 @@ public class BasicDebuggingExample {
             System.out.println("Result: " + result);
         } catch (NullPointerException e) {
             System.err.println("Caught NPE: " + e.getMessage());
-        } catch (Exception e) {
-            System.err.println("Caught general exception: " + e.getMessage());
+        } catch (RuntimeException e) {
+            System.err.println("Caught runtime exception: " + e.getMessage());
         }
     }
 

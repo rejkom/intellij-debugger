@@ -26,7 +26,7 @@ public class BasicDebuggingExample {
     }
 
     // Contains off-by-one error
-    private static List<Integer> generateNumbers(int count) {
+    static List<Integer> generateNumbers(int count) {
         List<Integer> numbers = new ArrayList<>();
         for (int i = 1; i <= count + 1; i++) { // should be i <= count
             numbers.add(i * 2);
@@ -35,7 +35,7 @@ public class BasicDebuggingExample {
     }
 
     // Contains potential null pointer exception
-    private static String processNumbers(List<Integer> numbers) {
+    static String processNumbers(List<Integer> numbers) {
         String prefix = null; // BUG: should be initialized
         StringBuilder result = new StringBuilder();
 
@@ -49,7 +49,7 @@ public class BasicDebuggingExample {
     }
 
     // Contains array index out of bounds error
-    private static void printArrayElements(int[] array) {
+    static void printArrayElements(int[] array) {
         System.out.println("Array elements:");
         for (int i = 0; i <= array.length; i++) { // BUG: should be i < array.length
             System.out.println("Element " + i + ": " + array[i]);

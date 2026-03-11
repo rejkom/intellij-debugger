@@ -22,7 +22,7 @@ public class RegexDebuggingExample {
         testLogParsing();
     }
 
-    private static void testEmailValidation() {
+    static void testEmailValidation() {
         System.out.println("\n=== Email Validation ===");
 
         // Regex pattern for email validation (simplified)
@@ -46,7 +46,7 @@ public class RegexDebuggingExample {
         }
     }
 
-    private static void testPhoneNumberExtraction() {
+    static void testPhoneNumberExtraction() {
         System.out.println("\n=== Phone Number Extraction ===");
 
         String text = """
@@ -75,7 +75,7 @@ public class RegexDebuggingExample {
         }
     }
 
-    private static void testLogParsing() {
+    static void testLogParsing() {
         System.out.println("\n=== Log Parsing ===");
 
         String[] logLines = {
@@ -87,7 +87,7 @@ public class RegexDebuggingExample {
         };
 
         // Regex for parsing log entries - use Check RegExp to test
-        String logRegex = "^(\\d{4}-\\d{2}-\\d{2})\\s+(\\d{2}:\\d{2}:\\d{2})\\s+\\[(\\w+)\\]\\s+(.+)$";
+        String logRegex = "^(\\d{4}-\\d{2}-\\d{2})\\s+(\\d{2}:\\d{2}:\\d{2})\\s+\\[(\\w+)]\\s+(.+)$";
         Pattern logPattern = Pattern.compile(logRegex);
 
         for (String line : logLines) {

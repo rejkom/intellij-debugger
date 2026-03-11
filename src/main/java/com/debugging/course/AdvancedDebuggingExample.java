@@ -32,7 +32,7 @@ public class AdvancedDebuggingExample {
         }
     }
 
-    private double calculateDiscount(Order order) {
+    double calculateDiscount(Order order) {
         double baseDiscount = order.getTotal().doubleValue() * 0.1;
         int loyaltyYears = order.getCustomer().getLoyaltyYears();
 
@@ -52,7 +52,7 @@ public class AdvancedDebuggingExample {
         order.setStatus(OrderStatus.CONFIRMED);
     }
 
-    private List<Order> createTestOrders() {
+    List<Order> createTestOrders() {
         List<Order> orders = new ArrayList<>();
         orders.add(createSampleOrder("ORD-001", new Customer("C001", "John Smith", "john@example.com", false, 1), 150.00));
         orders.add(createSampleOrder("ORD-002", new Customer("C002", "Jane Doe", "jane@example.com", true, 3), 250.00));

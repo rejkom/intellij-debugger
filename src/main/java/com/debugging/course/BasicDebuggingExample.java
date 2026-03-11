@@ -19,7 +19,7 @@ public class BasicDebuggingExample {
         processWithErrorHandling();
     }
 
-    private static List<Integer> generateNumbers(int count) {
+    static List<Integer> generateNumbers(int count) {
         List<Integer> numbers = new ArrayList<>();
         for (int i = 1; i <= count + 1; i++) {
             numbers.add(i * 2);
@@ -27,7 +27,7 @@ public class BasicDebuggingExample {
         return numbers;
     }
 
-    private static String processNumbers(List<Integer> numbers) {
+    static String processNumbers(List<Integer> numbers) {
         String prefix = "NUMBER: ";
         StringBuilder result = new StringBuilder();
 
@@ -40,7 +40,7 @@ public class BasicDebuggingExample {
         return result.toString();
     }
 
-    private static void printArrayElements(int[] array) {
+    static void printArrayElements(int[] array) {
         System.out.println("Array elements:");
         for (int i = 0; i < array.length; i++) {
             System.out.println("Element " + i + ": " + array[i]);

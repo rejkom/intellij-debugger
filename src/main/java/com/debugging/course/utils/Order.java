@@ -37,6 +37,10 @@ public class Order {
         return items;
     }
 
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
+
     public BigDecimal getTotal() {
         return total;
     }

@@ -39,7 +39,7 @@ public class JavaFeaturesExample {
         testStructuredConcurrency();
     }
 
-    private static void testVirtualThreads() {
+    static void testVirtualThreads() {
         System.out.println("\n=== Virtual Threads Test ===");
 
         // Create virtual threads
@@ -61,7 +61,7 @@ public class JavaFeaturesExample {
         } // executor.close() is called automatically
     }
 
-    private static void testPatternMatching() {
+    static void testPatternMatching() {
         System.out.println("\n=== Pattern Matching Test ===");
 
         Object[] objects = {
@@ -79,7 +79,7 @@ public class JavaFeaturesExample {
     }
 
     // Pattern matching with switch expressions
-    private static String analyzeObject(Object obj) {
+    static String analyzeObject(Object obj) {
         return switch (obj) {
             case null -> "Null object";
             case String s when s.length() > 10 -> "Long string: " + s.substring(0, 10) + "...";
@@ -92,7 +92,7 @@ public class JavaFeaturesExample {
         };
     }
 
-    private static void testRecords() {
+    static void testRecords() {
         System.out.println("\n=== Records Test ===");
 
         try {
@@ -107,7 +107,7 @@ public class JavaFeaturesExample {
     }
 
     // Structured Concurrency
-    private static void testStructuredConcurrency() throws Exception {
+    static void testStructuredConcurrency() throws Exception {
         System.out.println("\n=== Structured Concurrency Test ===");
 
         try (var scope = StructuredTaskScope.open()) {

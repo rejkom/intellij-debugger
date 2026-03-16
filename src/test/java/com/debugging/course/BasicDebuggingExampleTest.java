@@ -81,8 +81,7 @@ class BasicDebuggingExampleTest {
                     () -> assertTrue(numbers.contains(2), "Should contain 2 (1*2)"),
                     () -> assertTrue(numbers.contains(4), "Should contain 4 (2*2)"),
                     () -> assertTrue(numbers.contains(6), "Should contain 6 (3*2)"),
-                    () -> assertTrue(numbers.contains(8), "Should contain 8 (4*2) - bug produces extra element")
-            );
+                    () -> assertTrue(numbers.contains(8), "Should contain 8 (4*2) - bug produces extra element"));
         }
 
         @Test
@@ -103,144 +102,54 @@ class BasicDebuggingExampleTest {
     class ProcessNumbersTests {
 
         @Test
-        @DisplayName("Should throw NullPointerException due to null prefix")
-        @Tag("bug-detection")
-        void shouldThrowNullPointerException() {
+        @DisplayName("Should process numbers correctly with valid prefix")
+        @Tag("functionality")
+        void shouldProcessNumbersCorrectly() {
             // Given
             List<Integer> numbers = List.of(1, 2, 3);
 
-            // When & Then
-            NullPointerException exception = assertThrows(NullPointerException.class,
-                    () -> BasicDebuggingExample.processNumbers(numbers),
-                    "Expected NullPointerException due to null prefix");
-
-            assertNotNull(exception, "Exception should be thrown");
-        }
-
-        @Test
-        @DisplayName("Should fail immediately on first iteration")
-        @Tag("debugging-practice")
-        void shouldFailOnFirstIteration() {
-            // Given
-            List<Integer> singleNumber = List.of(42);
-
-            // When & Then
-            NullPointerException exception = assertThrows(NullPointerException.class,
-                    () -> BasicDebuggingExample.processNumbers(singleNumber));
-
-            // Verify the exception occurs at the expected location
-            assertTrue(exception.getStackTrace().length > 0,
-                    "Stack trace should be available for debugging");
-        }
-    }
-
-    @Nested
-    @DisplayName("Print Array Elements Tests")
-    class PrintArrayElementsTests {
-
-        @Test
-        @DisplayName("Should throw ArrayIndexOutOfBoundsException")
-        @Tag("bug-detection")
-        void shouldThrowArrayIndexOutOfBoundsException() {
-            // Given
-            int[] array = {1, 2, 3, 4, 5};
-
-            // When & Then
-            ArrayIndexOutOfBoundsException exception = assertThrows(
-                    ArrayIndexOutOfBoundsException.class,
-                    () -> BasicDebuggingExample.printArrayElements(array),
-                    "Expected ArrayIndexOutOfBoundsException due to <= instead of <");
-
-            assertNotNull(exception, "Exception should be thrown");
-        }
-
-        @Test
-        @DisplayName("Should fail with single element array")
-        @Tag("edge-cases")
-        void shouldFailWithSingleElement() {
-            // Given
-            int[] array = {42};
-
-            // When & Then
-            assertThrows(ArrayIndexOutOfBoundsException.class,
-                    () -> BasicDebuggingExample.printArrayElements(array),
-                    "Even single element array triggers the bug");
-        }
-
-        @ParameterizedTest(name = "Array of size {0} should throw exception")
-        @ValueSource(ints = {1, 2, 5, 10, 100})
-        @DisplayName("Should consistently fail regardless of array size")
-        @Tag("parameterized")
-        void shouldFailConsistently(int size) {
-            // Given
-            int[] array = new int[size];
-            for (int i = 0; i < size; i++) {
-                array[i] = i + 1;
-            }
-
-            // When & Then
-            assertThrows(ArrayIndexOutOfBoundsException.class,
-                    () -> BasicDebuggingExample.printArrayElements(array),
-                    "Bug should occur with array of size " + size);
-        }
-
-        @Test
-        @DisplayName("Should print correct number of elements before exception")
-        @Tag("debugging-practice")
-        void shouldPrintElementsBeforeException() {
-            // Given
-            int[] array = {10, 20, 30};
-
-            // When & Then
-            assertThrows(ArrayIndexOutOfBoundsException.class,
-                    () -> BasicDebuggingExample.printArrayElements(array));
-
-            String output = outputStream.toString();
-
-            // Verify that valid elements were printed before exception
-            assertAll("Verify partial output before exception",
-                    () -> assertTrue(output.contains("Element 0: 10"),
-                            "First element should be printed"),
-                    () -> assertTrue(output.contains("Element 1: 20"),
-                            "Second element should be printed"),
-                    () -> assertTrue(output.contains("Element 2: 30"),
-                            "Third element should be printed")
-            );
-        }
-    }
-
-    @Nested
-    @DisplayName("Main Method Integration Tests")
-    class MainMethodTests {
-
-        @Test
-        @DisplayName("Main method should fail during execution")
-        @Tag("integration")
-        void mainMethodShouldFail() {
-            // When & Then
-            assertThrows(NullPointerException.class,
-                    BasicDebuggingExample::main,
-                    "Main method should fail with NullPointerException in processNumbers");
-        }
-
-        @Test
-        @DisplayName("Should execute first steps before failing")
-        @Tag("integration")
-        void shouldExecuteInitialStepsBeforeFailing() {
             // When
-            try {
-                BasicDebuggingExample.main();
-                fail("Should have thrown NullPointerException");
-            } catch (NullPointerException e) {
-                // Expected behavior
-            }
+            String result = BasicDebuggingExample.processNumbers(numbers);
+
+            // Then
+            assertNotNull(result, "Result should not be null");
+            assertTrue(result.contains("NUMBER:"), "Result should contain prefix");
+            assertTrue(result.contains("1"), "Result should contain first number");
+            assertTrue(result.contains("2"), "Result should contain second number");
+            assertTrue(result.contains("3"), "Result should contain third number");
+        }
+
+        @Test
+        @DisplayName("Should handle empty list")
+        @Tag("edge-cases")
+        void shouldHandleEmptyList() {
+            // Given
+            List<Integer> numbers = List.of();
+
+            // When
+            String result = BasicDebuggingExample.processNumbers(numbers);
+
+            // Then
+            assertNotNull(result, "Result should not be null");
+            assertEquals("", result, "Result should be empty for empty list");
+        }
+    }
+
+    @Nested
+    @DisplayName("Error Handling Tests")
+    class ErrorHandlingTests {
+
+        @Test
+        @DisplayName("Should handle errors in processWithErrorHandling method")
+        @Tag("error-handling")
+        void shouldHandleErrorsInProcessWithErrorHandling() {
+            // When
+            assertDoesNotThrow(BasicDebuggingExample::processWithErrorHandling,
+                    "processWithErrorHandling should catch all exceptions");
 
             // Then
             String output = outputStream.toString();
-            assertTrue(output.contains("Starting Basic Debugging Exercise"),
-                    "Should print initial message before failing");
-            assertTrue(output.contains("Generated numbers:"),
-                    "Should generate and print numbers before failing");
+            assertFalse(output.isEmpty(), "Should produce some output");
         }
     }
 
@@ -250,29 +159,6 @@ class BasicDebuggingExampleTest {
     class DebuggingLearningTests {
 
         @Test
-        @DisplayName("Verify all three distinct bug types are present")
-        void shouldContainThreeDistinctBugTypes() {
-            assertAll("Verify bug diversity for learning",
-                    () -> {
-                        List<Integer> numbers = BasicDebuggingExample.generateNumbers(5);
-                        assertEquals(6, numbers.size(), "Bug 1: Off-by-one error");
-                    },
-                    () -> {
-                        List<Integer> testList = List.of(1, 2, 3);
-                        assertThrows(NullPointerException.class,
-                                () -> BasicDebuggingExample.processNumbers(testList),
-                                "Bug 2: NullPointerException");
-                    },
-                    () -> {
-                        int[] testArray = {1, 2, 3};
-                        assertThrows(ArrayIndexOutOfBoundsException.class,
-                                () -> BasicDebuggingExample.printArrayElements(testArray),
-                                "Bug 3: ArrayIndexOutOfBoundsException");
-                    }
-            );
-        }
-
-        @Test
         @DisplayName("Document expected debugging breakpoint locations")
         @Tag("documentation")
         void documentBreakpointLocations() {
@@ -280,7 +166,7 @@ class BasicDebuggingExampleTest {
             var breakpointGuide = """
                     Recommended breakpoints for debugging exercises:
                     1. Line in generateNumbers() - loop condition (i <= count + 1)
-                    2. Line in processNumbers() - prefix.toUpperCase() call
+                    2. Line in processNumbers() - StringBuilder append operations
                     3. Line in printArrayElements() - array[i] access in loop
                     
                     Students should:

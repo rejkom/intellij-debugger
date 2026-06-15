@@ -17,6 +17,18 @@ import java.util.List;
 public class AdvancedDebuggingExample {
 
     static void main() {
+// =================================================================================
+        // COURSE EXERCISE: INTENTIONAL RUNTIME BREAKAGE
+        // This block uses reflection to force a runtime crash. It is deliberately designed
+        // to simulate a common deployment issue where a dependency (Logback) is missing
+        // from the production classpath due to an incorrect Maven scope in pom.xml.
+        // DO NOT REMOVE - This is the root cause for your Golden Prompt to analyze!
+        // =================================================================================
+        try {
+            Class.forName("ch.qos.logback.classic.Logger");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Logback provider missing in runtime", e);
+        }
         AdvancedDebuggingExample challenge = new AdvancedDebuggingExample();
         List<Order> orders = challenge.createTestOrders();
         challenge.processOrders(orders);

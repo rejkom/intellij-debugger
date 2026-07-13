@@ -1,0 +1,6 @@
+Exception in thread "main" java.lang.NullPointerException: Cannot invoke "String.toUpperCase()" because "prefix" is null
+	at com.debugging.course.BasicDebuggingExample.processNumbers(BasicDebuggingExample.java:43)
+	at com.debugging.course.BasicDebuggingExample.main(BasicDebuggingExample.java:21)
+	at java.base/java.lang.invoke.DirectMethodHandle$Holder.invokeStatic(DirectMethodHandle$Holder)
+	at java.base/java.lang.invoke.LambdaForm$MH.invoke(LambdaForm$MH)
+

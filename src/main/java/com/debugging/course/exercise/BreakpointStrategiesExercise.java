@@ -1,4 +1,4 @@
-package com.debugging.course;
+package com.debugging.course.exercise;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
  *   5. EXCEPTION breakpoint:       stop when IllegalStateException is thrown
  *   6. FIELD watchpoint:           stop when 'processedCount' changes
  */
-public class BreakpointStrategiesExample {
+public class BreakpointStrategiesExercise {
 
     public record Order(int id, double amount, boolean flagged) {
     }
@@ -28,7 +28,7 @@ public class BreakpointStrategiesExample {
     static void main() {
         System.out.println("Advanced Breakpoints Exercise");
 
-        BreakpointStrategiesExample app = new BreakpointStrategiesExample();
+        BreakpointStrategiesExercise app = new BreakpointStrategiesExercise();
         List<Order> orders = app.createOrders(1000);
 
         double total = app.processAll(orders);
